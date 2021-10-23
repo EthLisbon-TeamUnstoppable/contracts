@@ -61,7 +61,7 @@ contract CryptoJudges is IJudgeManager {
 	// Case management
 	//////
 
-	function createCase(address opponent, bytes32 proofHash) public payable returns (uint caseId) {
+	function createCase(address opponent, string calldata description, bytes32 proofHash) public payable returns (uint caseId) {
 		require(Judges[msg.sender] == 0, "A judge cannot open a case");
 		require(Judges[opponent] == 0, "A judge cannot be an opponent");
 		require(msg.value >= MINIMUM_CASE_COLLATERAL, "Must provide some coins as collateral");
@@ -71,6 +71,7 @@ contract CryptoJudges is IJudgeManager {
 			this,
 			msg.sender,
 			opponent,
+			description,
 			proofHash,
 			msg.value);
 		Cases[currentCaseId] = newCase;
@@ -116,7 +117,7 @@ contract CryptoJudges is IJudgeManager {
 
 	function setDecision(uint caseId, bool win) public {
 		require(Cases[caseId].isJudge(msg.sender), "You are not the judge");
-		Cases[caseId].setDecision(win);
+		Cases[caseId].setDecision(win, msg.sender);
 	}
 
 	function appeal(uint caseId) public payable {
@@ -131,12 +132,14 @@ contract CryptoJudges is IJudgeManager {
 	}
 
 	function assignJudge(uint caseId) private {
-		uint judge = 0;
-		while (judge == 0 || JudgesData[judge].banned) { // keep rolling untill we find a judge
-			judge = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1)))) % currentJudgeId) + 1;
-		}
-		if (Cases[caseId].assignJudge(JudgesData[judge].addr)) {
-			lastCases[JudgesData[judge].addr] = caseId;
+		while (Cases[caseId].needsJudges()) {
+			uint judge = 0;
+			while (judge == 0 || JudgesData[judge].banned || Cases[caseId].isJudge(JudgesData[judge].addr)) { // keep rolling untill we find a judge
+				judge = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1)))) % currentJudgeId) + 1;
+			}
+			if (Cases[caseId].assignJudge(JudgesData[judge].addr)) {
+				lastCases[JudgesData[judge].addr] = caseId;
+			}
 		}
 	}
 }

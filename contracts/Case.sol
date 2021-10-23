@@ -24,9 +24,13 @@ enum CaseStates {
 struct CaseData {
 	CaseParticipant requester;	
 	CaseParticipant opponent;
-	address judge;
+	address[] judges;
+	uint judgesRequired;
+	string description;
 
 	CaseStates state;
+	uint tally;
+	uint votes;
 	uint baseCollateral;
 	uint expiration;
 }
@@ -37,6 +41,9 @@ contract Case {
 	uint constant JUDGE_CUT = 1000; // 1%
 
 	CaseData data;
+	
+	mapping (address => bool) isJudgeVoteRequired;
+
 	IJudgeManager judges;
 
 	event CaseRequested(address indexed requester, address indexed opponent);
@@ -45,15 +52,19 @@ contract Case {
 	event CaseAborted();
 	event CaseClosed();
 
-	constructor(IJudgeManager judgesContract, address requesterAddress, address opponentAddress, bytes32 proofHash, uint collateral) payable {
+	constructor(IJudgeManager judgesContract, address requesterAddress, address opponentAddress, string memory description, bytes32 proofHash, uint collateral) payable {
 		require(msg.value == collateral, "Invalid collateral provided");
 
 		judges = judgesContract;
 		data = CaseData(
 			CaseParticipant(requesterAddress, proofHash, "", collateral),
 			CaseParticipant(opponentAddress, "", "", 0),
-			address(0x0),
+			new address[](0),
+			1,
+			description,
 			CaseStates.Requested,
+			0,
+			0,
 			collateral,
 			block.timestamp + STEP_EXPIRATION_TIME
 		);
@@ -78,7 +89,16 @@ contract Case {
 	}
 
 	function isJudge(address addr) public view returns (bool) {
-		return data.judge == addr;
+		for (uint256 index = 0; index < data.judges.length; index++) {
+			if (data.judges[index] == addr) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function needsJudges() public view returns (bool) {
+		return data.state == CaseStates.Judging && data.judges.length < data.judgesRequired;
 	}
 
 	modifier onlyJudgesContract {
@@ -129,23 +149,33 @@ contract Case {
 	}
 	
 	function assignJudge(address judgeAddress) public handlesExpired onlyJudgesContract returns (bool) {
-		if (data.state == CaseStates.Judging) { // Don't fail for other states to allow calling multiple times
-			data.judge = judgeAddress;
+		if (data.state == CaseStates.Judging && !isJudge(judgeAddress)) { // Don't fail for other states to allow calling multiple times
+			isJudgeVoteRequired[judgeAddress] = true;
+			data.judges.push(judgeAddress);
 			return true;
 		}
 		return false;
 	}
 
-	function setDecision(bool win) public handlesExpired bumpsExpiration onlyJudgesContract {
+	function setDecision(bool win, address judge) public handlesExpired bumpsExpiration onlyJudgesContract {
 		require(data.state == CaseStates.Judging, "This case is not being judged");
+		require(isJudgeVoteRequired[judge], "This judge has voted");
 
 		if (win) {
-			data.state = CaseStates.Won;
-		} else {
-			data.state = CaseStates.Lost;
+			data.tally += 1;
+		}
+		isJudgeVoteRequired[judge] = false;
+		data.votes += 1;
+
+		if (data.votes == data.judgesRequired) {
+			if(data.tally >= data.judgesRequired / 2) {
+				data.state = CaseStates.Won;
+			} else {
+				data.state = CaseStates.Lost;
+			}
 		}
 
-		judges.reportGood(data.judge);
+		judges.reportGood(judge);
 	}
 
 	function appeal(address appealer) public payable handlesExpired bumpsExpiration onlyJudgesContract {
@@ -158,6 +188,10 @@ contract Case {
 			data.opponent.collateral += msg.value;
 		}
 		data.baseCollateral *= 3;
+		data.judgesRequired *= 3;
+		data.judges = new address[](0);
+		data.tally = 0;
+		data.votes = 0;
 		data.state = CaseStates.Judging;
 	}
 	
@@ -182,7 +216,9 @@ contract Case {
 
 	function sendJudgeCut(uint losersCollateral) private {
 		uint judgesCut = losersCollateral * JUDGE_CUT / JUDGE_CUT_DENOMINATOR;
-		payable(data.judge).transfer(judgesCut); // send the judge their cut
+		for (uint256 index = 0; index < data.judges.length; index++) {
+			payable(data.judges[index]).transfer(judgesCut); // send the judge their cut
+		}
 	}
 
 	function handleExpiredCase() private {
@@ -208,7 +244,11 @@ contract Case {
 			// refund both and report the bad judges
 			data.state = CaseStates.Aborted;
 			refundAll();
-			judges.reportBad(data.judge);
+			for (uint256 index = 0; index < data.judges.length; index++) {
+				if (isJudgeVoteRequired[data.judges[index]]) {
+					judges.reportBad(data.judges[index]);
+				}
+			}
 			emit CaseAborted();
 		} else if (data.state == CaseStates.Won) { // requester wins
 			data.state = CaseStates.Closed;
