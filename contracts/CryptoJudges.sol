@@ -14,7 +14,9 @@ contract CryptoJudges is IJudgeManager {
 	mapping (uint => Judge) JudgesData;
 	mapping (address => uint) Judges;
 	uint currentJudgeId;
+
 	mapping (uint => Case) Cases;
+	mapping (address => uint) lastCases;
 	uint currentCaseId;
 
 	uint constant REQUIRED_JUDGE_STAKE = 100; //1 ether;
@@ -50,6 +52,7 @@ contract CryptoJudges is IJudgeManager {
 		if (JudgesData[judgeId].score < JUDGE_SCORE_DECREMENT) { // score is too low, kick the judge
 			JudgesData[judgeId].banned = true;
 			payable(address(0x0)).transfer(JudgesData[judgeId].stake);
+			return;
 		}
 		JudgesData[judgeId].score -= JUDGE_SCORE_DECREMENT;
 	}
@@ -72,7 +75,21 @@ contract CryptoJudges is IJudgeManager {
 			msg.value);
 		Cases[currentCaseId] = newCase;
 
+		lastCases[msg.sender] = currentCaseId;
+		lastCases[opponent] = currentCaseId;
+
 		return currentCaseId;
+	}
+
+	function getCase(address participant) public view returns (CaseData memory) {
+		require(lastCases[participant] != 0, "No cases");
+		
+		return Cases[lastCases[participant]].getCaseData();
+	}
+	
+	function getCaseById(uint caseId) public view returns (CaseData memory) {
+		require(address(Cases[caseId]) != address(0x0), "No case");
+		return Cases[caseId].getCaseData();
 	}
 
 	function caseContract(uint caseId) public view returns (address) {
@@ -118,6 +135,8 @@ contract CryptoJudges is IJudgeManager {
 		while (judge == 0 || JudgesData[judge].banned) { // keep rolling untill we find a judge
 			judge = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1)))) % currentJudgeId) + 1;
 		}
-		Cases[caseId].assignJudge(JudgesData[judge].addr); // no-op if not ready to assign
+		if (Cases[caseId].assignJudge(JudgesData[judge].addr)) {
+			lastCases[JudgesData[judge].addr] = caseId;
+		}
 	}
 }

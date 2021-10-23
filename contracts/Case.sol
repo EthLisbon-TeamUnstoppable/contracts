@@ -2,38 +2,41 @@
 pragma solidity 0.8.9;
 import './IJudgeManager.sol';
 
+struct CaseParticipant {
+	address addr;
+	bytes32 proofHash;
+	string proof;
+	uint collateral;
+}
+
+enum CaseStates {
+	Undefined,
+	Requested,
+	Accepted,
+	DisclosingProofs,
+	Judging,
+	Won,
+	Lost,
+	Aborted,
+	Closed
+}
+
+struct CaseData {
+	CaseParticipant requester;	
+	CaseParticipant opponent;
+	address judge;
+
+	CaseStates state;
+	uint baseCollateral;
+	uint expiration;
+}
+
 contract Case {
 	uint constant STEP_EXPIRATION_TIME = 30 seconds; //1 days;
 	uint constant JUDGE_CUT_DENOMINATOR = 100000; // 100%
 	uint constant JUDGE_CUT = 1000; // 1%
 
-	struct CaseParticipant {
-		address addr;
-		bytes32 proofHash;
-		string proof;
-		uint collateral;
-	}
-
-	address judge;
-	CaseParticipant requester;	
-	CaseParticipant opponent;
-
-	uint baseCollateral;
-	uint expiration;
-
-	enum CaseStates {
-		Undefined,
-		Requested,
-		Accepted,
-		DisclosingProofs,
-		Judging,
-		Won,
-		Lost,
-		Aborted,
-		Closed
-	}
-
-	CaseStates state;
+	CaseData data;
 	IJudgeManager judges;
 
 	event CaseRequested(address indexed requester, address indexed opponent);
@@ -43,30 +46,39 @@ contract Case {
 	event CaseClosed();
 
 	constructor(IJudgeManager judgesContract, address requesterAddress, address opponentAddress, bytes32 proofHash, uint collateral) payable {
+		require(msg.value == collateral, "Invalid collateral provided");
+
 		judges = judgesContract;
-		baseCollateral = collateral;
-		requester = CaseParticipant(requesterAddress, proofHash, "", collateral);
-		opponent = CaseParticipant(opponentAddress, "", "", 0);
-		expiration = block.timestamp + STEP_EXPIRATION_TIME;
-		state = CaseStates.Requested;
+		data = CaseData(
+			CaseParticipant(requesterAddress, proofHash, "", collateral),
+			CaseParticipant(opponentAddress, "", "", 0),
+			address(0x0),
+			CaseStates.Requested,
+			collateral,
+			block.timestamp + STEP_EXPIRATION_TIME
+		);
 
 		emit CaseRequested(requesterAddress, opponentAddress);
 	}
 
+	function getCaseData() public view returns (CaseData memory) {
+		return data;
+	}
+
 	function isExpired() public view returns (bool) {
-		return expiration < block.timestamp;
+		return data.expiration < block.timestamp;
 	}
 
 	function isRequester(address addr) public view returns (bool) {
-		return requester.addr == addr;
+		return data.requester.addr == addr;
 	}
 	
 	function isOpponent(address addr) public view returns (bool) {
-		return opponent.addr == addr;
+		return data.opponent.addr == addr;
 	}
 
 	function isJudge(address addr) public view returns (bool) {
-		return judge == addr;
+		return data.judge == addr;
 	}
 
 	modifier onlyJudgesContract {
@@ -84,67 +96,69 @@ contract Case {
 
 	modifier bumpsExpiration {
 		_;
-		expiration = block.timestamp + STEP_EXPIRATION_TIME;
+		data.expiration = block.timestamp + STEP_EXPIRATION_TIME;
 	}
 
 	function acceptCase(bytes32 proofHash) public payable handlesExpired bumpsExpiration onlyJudgesContract {
-		require(state == CaseStates.Requested);
-		require(baseCollateral == msg.value, "Provide the right amount of collateral");
+		require(data.state == CaseStates.Requested);
+		require(data.baseCollateral == msg.value, "Provide the right amount of collateral");
 
-		opponent.proofHash = proofHash;
-		opponent.collateral = baseCollateral;
-		state = CaseStates.Accepted;
+		data.opponent.proofHash = proofHash;
+		data.opponent.collateral = data.baseCollateral;
+		data.state = CaseStates.Accepted;
 
-		emit CaseAccepted(requester.addr, opponent.addr);
+		emit CaseAccepted(data.requester.addr, data.opponent.addr);
 	}
 
 	function discloseRequesterProof(string calldata proof) public handlesExpired bumpsExpiration onlyJudgesContract {
-		require(state == CaseStates.Accepted || state == CaseStates.DisclosingProofs, "This case does not accept proofs");
-		require(!isDisclosedProof(requester), "The proof is already provided");
-		require(keccak256(abi.encodePacked(proof)) == requester.proofHash, "Proof does not match proof hash");
+		require(data.state == CaseStates.Accepted || data.state == CaseStates.DisclosingProofs, "This case does not accept proofs");
+		require(!isDisclosedProof(data.requester), "The proof is already provided");
+		require(keccak256(abi.encodePacked(proof)) == data.requester.proofHash, "Proof does not match proof hash");
 		
-		requester.proof = proof;
-		state = CaseStates(uint(state) + 1); // move on to next state (either Disclosing or Judging)
+		data.requester.proof = proof;
+		data.state = CaseStates(uint(data.state) + 1); // move on to next state (either Disclosing or Judging)
 	}
 
 	function discloseOpponentProof(string calldata proof) public handlesExpired bumpsExpiration onlyJudgesContract {
-		require(state == CaseStates.Accepted || state == CaseStates.DisclosingProofs, "This case does not accept proofs");
-		require(!isDisclosedProof(opponent), "The proof is already provided");
-		require(keccak256(abi.encodePacked(proof)) == opponent.proofHash, "Proof does not match proof hash");
+		require(data.state == CaseStates.Accepted || data.state == CaseStates.DisclosingProofs, "This case does not accept proofs");
+		require(!isDisclosedProof(data.opponent), "The proof is already provided");
+		require(keccak256(abi.encodePacked(proof)) == data.opponent.proofHash, "Proof does not match proof hash");
 		
-		opponent.proof = proof;
-		state = CaseStates(uint(state) + 1); // move on to next state (either Disclosing or Judging)
+		data.opponent.proof = proof;
+		data.state = CaseStates(uint(data.state) + 1); // move on to next state (either Disclosing or Judging)
 	}
 	
-	function assignJudge(address judgeAddress) public handlesExpired onlyJudgesContract {
-		if (state == CaseStates.Judging) { // Don't fail for other states to allow calling multiple times
-			judge = judgeAddress;
+	function assignJudge(address judgeAddress) public handlesExpired onlyJudgesContract returns (bool) {
+		if (data.state == CaseStates.Judging) { // Don't fail for other states to allow calling multiple times
+			data.judge = judgeAddress;
+			return true;
 		}
+		return false;
 	}
 
 	function setDecision(bool win) public handlesExpired bumpsExpiration onlyJudgesContract {
-		require(state == CaseStates.Judging, "This case is not being judged");
+		require(data.state == CaseStates.Judging, "This case is not being judged");
 
 		if (win) {
-			state = CaseStates.Won;
+			data.state = CaseStates.Won;
 		} else {
-			state = CaseStates.Lost;
+			data.state = CaseStates.Lost;
 		}
 
-		judges.reportGood(judge);
+		judges.reportGood(data.judge);
 	}
 
 	function appeal(address appealer) public payable handlesExpired bumpsExpiration onlyJudgesContract {
-		require(state == CaseStates.Won || state == CaseStates.Lost, "The case cannot be appealed");
-		require(msg.value == baseCollateral * 3);
+		require(data.state == CaseStates.Won || data.state == CaseStates.Lost, "The case cannot be appealed");
+		require(msg.value == data.baseCollateral * 3);
 
-		if (requester.addr == appealer) {
-			requester.collateral += msg.value;
-		} else if (opponent.addr == appealer) {
-			opponent.collateral += msg.value;
+		if (data.requester.addr == appealer) {
+			data.requester.collateral += msg.value;
+		} else if (data.opponent.addr == appealer) {
+			data.opponent.collateral += msg.value;
 		}
-		baseCollateral *= 3;
-		state = CaseStates.Judging;
+		data.baseCollateral *= 3;
+		data.state = CaseStates.Judging;
 	}
 	
 	function claim() public {
@@ -157,54 +171,54 @@ contract Case {
 	}
 
 	function refundAll() private {
-		if (requester.collateral != 0) {
-			payable(requester.addr).transfer(requester.collateral);
+		if (data.requester.collateral != 0) {
+			payable(data.requester.addr).transfer(data.requester.collateral);
 		}
 
-		if (opponent.collateral != 0) {
-			payable(opponent.addr).transfer(opponent.collateral);
+		if (data.opponent.collateral != 0) {
+			payable(data.opponent.addr).transfer(data.opponent.collateral);
 		}
 	}
 
 	function sendJudgeCut(uint losersCollateral) private {
 		uint judgesCut = losersCollateral * JUDGE_CUT / JUDGE_CUT_DENOMINATOR;
-		payable(judge).transfer(judgesCut); // send the judge their cut
+		payable(data.judge).transfer(judgesCut); // send the judge their cut
 	}
 
 	function handleExpiredCase() private {
-		if (state == CaseStates.Requested || state == CaseStates.Accepted) {
-			state = CaseStates.Aborted;
+		if (data.state == CaseStates.Requested || data.state == CaseStates.Accepted) {
+			data.state = CaseStates.Aborted;
 			refundAll();
 			emit CaseAborted();
 			
-		} else if (state == CaseStates.DisclosingProofs) { // only one of participants disclosed proof
+		} else if (data.state == CaseStates.DisclosingProofs) { // only one of participants disclosed proof
 			// send everything to the one who disclosed proof
 			address goodBoy = address(0x0);
-			if (isDisclosedProof(opponent)) {
-				goodBoy = opponent.addr;
-			} else if (isDisclosedProof(requester)) {
-				goodBoy = requester.addr;
+			if (isDisclosedProof(data.opponent)) {
+				goodBoy = data.opponent.addr;
+			} else if (isDisclosedProof(data.requester)) {
+				goodBoy = data.requester.addr;
 			}
 
-			state = CaseStates.Aborted;
+			data.state = CaseStates.Aborted;
 			payable(goodBoy).transfer(address(this).balance);
 			emit CaseAborted();
 						
-		} else if (state == CaseStates.Judging) { // Judging did not complete on time
+		} else if (data.state == CaseStates.Judging) { // Judging did not complete on time
 			// refund both and report the bad judges
-			state = CaseStates.Aborted;
+			data.state = CaseStates.Aborted;
 			refundAll();
-			judges.reportBad(judge);
+			judges.reportBad(data.judge);
 			emit CaseAborted();
-		} else if (state == CaseStates.Won) { // requester wins
-			state = CaseStates.Closed;
-			sendJudgeCut(opponent.collateral);
-			payable(requester.addr).transfer(address(this).balance); // send the rest to the requester
+		} else if (data.state == CaseStates.Won) { // requester wins
+			data.state = CaseStates.Closed;
+			sendJudgeCut(data.opponent.collateral);
+			payable(data.requester.addr).transfer(address(this).balance); // send the rest to the requester
 			emit CaseClosed();
-		} else if (state == CaseStates.Lost) { // requester loses, opponent wins
-			state = CaseStates.Closed;
-			sendJudgeCut(requester.collateral);
-			payable(opponent.addr).transfer(address(this).balance); // send the rest to the opponent
+		} else if (data.state == CaseStates.Lost) { // requester loses, opponent wins
+			data.state = CaseStates.Closed;
+			sendJudgeCut(data.requester.collateral);
+			payable(data.opponent.addr).transfer(address(this).balance); // send the rest to the opponent
 			emit CaseClosed();
 		}
 	}

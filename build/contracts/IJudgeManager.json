@@ -1,0 +1,370 @@
+{
+  "contractName": "IJudgeManager",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "jugde",
+          "type": "address"
+        }
+      ],
+      "name": "reportGood",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "jugde",
+          "type": "address"
+        }
+      ],
+      "name": "reportBad",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"jugde\",\"type\":\"address\"}],\"name\":\"reportBad\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"jugde\",\"type\":\"address\"}],\"name\":\"reportGood\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IJudgeManager.sol\":\"IJudgeManager\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/IJudgeManager.sol\":{\"keccak256\":\"0x047295a1250a064de4ecf290be47e9e0cffc4dc0f00a76cab67c92e0c4593128\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b5385757c94463bc6340da9d9cc443421109c59c68ff31288430a492f98625de\",\"dweb:/ipfs/QmbMa1YfrPepws1YFNVj2pnNQk4E29EdKSJLxGDtBRNLju\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.9;\r\n\r\ninterface IJudgeManager {\r\n    function reportGood(address jugde) external;\r\n    function reportBad(address jugde) external;\r\n}\r\n\r\n",
+  "sourcePath": "C:\\Users\\msotn\\Desktop\\Crypto Judges\\contracts\\IJudgeManager.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/IJudgeManager.sol",
+    "exportedSymbols": {
+      "IJudgeManager": [
+        1442
+      ]
+    },
+    "id": 1443,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1431,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".9"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:22:2"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IJudgeManager",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 1442,
+        "linearizedBaseContracts": [
+          1442
+        ],
+        "name": "IJudgeManager",
+        "nameLocation": "69:13:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "8d5cf4d8",
+            "id": 1436,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportGood",
+            "nameLocation": "99:10:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1434,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1433,
+                  "mutability": "mutable",
+                  "name": "jugde",
+                  "nameLocation": "118:5:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1436,
+                  "src": "110:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1432,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "110:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "109:15:2"
+            },
+            "returnParameters": {
+              "id": 1435,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "133:0:2"
+            },
+            "scope": 1442,
+            "src": "90:44:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "f3181bff",
+            "id": 1441,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportBad",
+            "nameLocation": "149:9:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1439,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1438,
+                  "mutability": "mutable",
+                  "name": "jugde",
+                  "nameLocation": "167:5:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1441,
+                  "src": "159:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1437,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "159:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "158:15:2"
+            },
+            "returnParameters": {
+              "id": 1440,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "182:0:2"
+            },
+            "scope": 1442,
+            "src": "140:43:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1443,
+        "src": "59:127:2",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:157:2"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/IJudgeManager.sol",
+    "exportedSymbols": {
+      "IJudgeManager": [
+        1442
+      ]
+    },
+    "id": 1443,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1431,
+        "literals": [
+          "solidity",
+          "0.8",
+          ".9"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:22:2"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IJudgeManager",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 1442,
+        "linearizedBaseContracts": [
+          1442
+        ],
+        "name": "IJudgeManager",
+        "nameLocation": "69:13:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "8d5cf4d8",
+            "id": 1436,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportGood",
+            "nameLocation": "99:10:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1434,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1433,
+                  "mutability": "mutable",
+                  "name": "jugde",
+                  "nameLocation": "118:5:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1436,
+                  "src": "110:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1432,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "110:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "109:15:2"
+            },
+            "returnParameters": {
+              "id": 1435,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "133:0:2"
+            },
+            "scope": 1442,
+            "src": "90:44:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "f3181bff",
+            "id": 1441,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportBad",
+            "nameLocation": "149:9:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1439,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1438,
+                  "mutability": "mutable",
+                  "name": "jugde",
+                  "nameLocation": "167:5:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1441,
+                  "src": "159:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1437,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "159:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "158:15:2"
+            },
+            "returnParameters": {
+              "id": 1440,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "182:0:2"
+            },
+            "scope": 1442,
+            "src": "140:43:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1443,
+        "src": "59:127:2",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:157:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-23T11:17:44.988Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
