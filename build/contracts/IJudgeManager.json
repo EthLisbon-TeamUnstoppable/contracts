@@ -28,7 +28,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"jugde\",\"type\":\"address\"}],\"name\":\"reportBad\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"jugde\",\"type\":\"address\"}],\"name\":\"reportGood\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IJudgeManager.sol\":\"IJudgeManager\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/IJudgeManager.sol\":{\"keccak256\":\"0x047295a1250a064de4ecf290be47e9e0cffc4dc0f00a76cab67c92e0c4593128\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b5385757c94463bc6340da9d9cc443421109c59c68ff31288430a492f98625de\",\"dweb:/ipfs/QmbMa1YfrPepws1YFNVj2pnNQk4E29EdKSJLxGDtBRNLju\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"jugde\",\"type\":\"address\"}],\"name\":\"reportBad\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"jugde\",\"type\":\"address\"}],\"name\":\"reportGood\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IJudgeManager.sol\":\"IJudgeManager\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/IJudgeManager.sol\":{\"keccak256\":\"0x047295a1250a064de4ecf290be47e9e0cffc4dc0f00a76cab67c92e0c4593128\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b5385757c94463bc6340da9d9cc443421109c59c68ff31288430a492f98625de\",\"dweb:/ipfs/QmbMa1YfrPepws1YFNVj2pnNQk4E29EdKSJLxGDtBRNLju\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -42,15 +42,15 @@
     "absolutePath": "project:/contracts/IJudgeManager.sol",
     "exportedSymbols": {
       "IJudgeManager": [
-        1442
+        1647
       ]
     },
-    "id": 1443,
+    "id": 1648,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1431,
+        "id": 1636,
         "literals": [
           "solidity",
           "0.8",
@@ -66,9 +66,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1442,
+        "id": 1647,
         "linearizedBaseContracts": [
-          1442
+          1647
         ],
         "name": "IJudgeManager",
         "nameLocation": "69:13:2",
@@ -76,7 +76,7 @@
         "nodes": [
           {
             "functionSelector": "8d5cf4d8",
-            "id": 1436,
+            "id": 1641,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -84,17 +84,17 @@
             "nameLocation": "99:10:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1434,
+              "id": 1639,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1433,
+                  "id": 1638,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "118:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1436,
+                  "scope": 1641,
                   "src": "110:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -103,7 +103,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1432,
+                    "id": 1637,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "110:7:2",
@@ -119,12 +119,12 @@
               "src": "109:15:2"
             },
             "returnParameters": {
-              "id": 1435,
+              "id": 1640,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "133:0:2"
             },
-            "scope": 1442,
+            "scope": 1647,
             "src": "90:44:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -132,7 +132,7 @@
           },
           {
             "functionSelector": "f3181bff",
-            "id": 1441,
+            "id": 1646,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -140,17 +140,17 @@
             "nameLocation": "149:9:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1439,
+              "id": 1644,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1438,
+                  "id": 1643,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "167:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1441,
+                  "scope": 1646,
                   "src": "159:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -159,7 +159,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1437,
+                    "id": 1642,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "159:7:2",
@@ -175,19 +175,19 @@
               "src": "158:15:2"
             },
             "returnParameters": {
-              "id": 1440,
+              "id": 1645,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "182:0:2"
             },
-            "scope": 1442,
+            "scope": 1647,
             "src": "140:43:2",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1443,
+        "scope": 1648,
         "src": "59:127:2",
         "usedErrors": []
       }
@@ -198,15 +198,15 @@
     "absolutePath": "project:/contracts/IJudgeManager.sol",
     "exportedSymbols": {
       "IJudgeManager": [
-        1442
+        1647
       ]
     },
-    "id": 1443,
+    "id": 1648,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1431,
+        "id": 1636,
         "literals": [
           "solidity",
           "0.8",
@@ -222,9 +222,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1442,
+        "id": 1647,
         "linearizedBaseContracts": [
-          1442
+          1647
         ],
         "name": "IJudgeManager",
         "nameLocation": "69:13:2",
@@ -232,7 +232,7 @@
         "nodes": [
           {
             "functionSelector": "8d5cf4d8",
-            "id": 1436,
+            "id": 1641,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -240,17 +240,17 @@
             "nameLocation": "99:10:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1434,
+              "id": 1639,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1433,
+                  "id": 1638,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "118:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1436,
+                  "scope": 1641,
                   "src": "110:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -259,7 +259,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1432,
+                    "id": 1637,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "110:7:2",
@@ -275,12 +275,12 @@
               "src": "109:15:2"
             },
             "returnParameters": {
-              "id": 1435,
+              "id": 1640,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "133:0:2"
             },
-            "scope": 1442,
+            "scope": 1647,
             "src": "90:44:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -288,7 +288,7 @@
           },
           {
             "functionSelector": "f3181bff",
-            "id": 1441,
+            "id": 1646,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -296,17 +296,17 @@
             "nameLocation": "149:9:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1439,
+              "id": 1644,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1438,
+                  "id": 1643,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "167:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1441,
+                  "scope": 1646,
                   "src": "159:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -315,7 +315,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1437,
+                    "id": 1642,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "159:7:2",
@@ -331,19 +331,19 @@
               "src": "158:15:2"
             },
             "returnParameters": {
-              "id": 1440,
+              "id": 1645,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "182:0:2"
             },
-            "scope": 1442,
+            "scope": 1647,
             "src": "140:43:2",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1443,
+        "scope": 1648,
         "src": "59:127:2",
         "usedErrors": []
       }
@@ -356,7 +356,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-10-23T11:17:44.988Z",
+  "updatedAt": "2021-10-23T14:34:42.577Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
