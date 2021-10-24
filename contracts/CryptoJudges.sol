@@ -19,11 +19,11 @@ contract CryptoJudges is IJudgeManager {
 	mapping (address => uint) lastCases;
 	uint currentCaseId;
 
-	uint constant REQUIRED_JUDGE_STAKE = 100; //1 ether;
-	uint constant MINIMUM_CASE_COLLATERAL = 1; //gwei;
+	uint constant REQUIRED_JUDGE_STAKE = 100000 gwei; // 0.0001 ether;
+	uint constant MINIMUM_CASE_COLLATERAL = 1 gwei; //gwei;
 	uint constant JUDGE_SCORE_INITIAL = 100;
 	uint constant JUDGE_SCORE_INCREMENT = 10;
-	uint constant JUDGE_SCORE_DECREMENT = 20;
+	uint constant JUDGE_SCORE_DECREMENT = 50;
 
 	constructor() {
 		currentJudgeId = 0; // id == 0 -> null judge/case/request
@@ -69,6 +69,7 @@ contract CryptoJudges is IJudgeManager {
 		currentCaseId++;
 		Case newCase = (new Case){value:msg.value}(
 			this,
+			currentCaseId,
 			msg.sender,
 			opponent,
 			description,

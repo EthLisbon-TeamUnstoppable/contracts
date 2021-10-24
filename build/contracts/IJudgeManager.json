@@ -42,15 +42,15 @@
     "absolutePath": "project:/contracts/IJudgeManager.sol",
     "exportedSymbols": {
       "IJudgeManager": [
-        1647
+        1653
       ]
     },
-    "id": 1648,
+    "id": 1654,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1636,
+        "id": 1642,
         "literals": [
           "solidity",
           "0.8",
@@ -66,9 +66,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1647,
+        "id": 1653,
         "linearizedBaseContracts": [
-          1647
+          1653
         ],
         "name": "IJudgeManager",
         "nameLocation": "69:13:2",
@@ -76,7 +76,7 @@
         "nodes": [
           {
             "functionSelector": "8d5cf4d8",
-            "id": 1641,
+            "id": 1647,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -84,17 +84,17 @@
             "nameLocation": "99:10:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1639,
+              "id": 1645,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1638,
+                  "id": 1644,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "118:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1641,
+                  "scope": 1647,
                   "src": "110:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -103,7 +103,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1637,
+                    "id": 1643,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "110:7:2",
@@ -119,12 +119,12 @@
               "src": "109:15:2"
             },
             "returnParameters": {
-              "id": 1640,
+              "id": 1646,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "133:0:2"
             },
-            "scope": 1647,
+            "scope": 1653,
             "src": "90:44:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -132,7 +132,7 @@
           },
           {
             "functionSelector": "f3181bff",
-            "id": 1646,
+            "id": 1652,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -140,17 +140,17 @@
             "nameLocation": "149:9:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1644,
+              "id": 1650,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1643,
+                  "id": 1649,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "167:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1646,
+                  "scope": 1652,
                   "src": "159:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -159,7 +159,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1642,
+                    "id": 1648,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "159:7:2",
@@ -175,19 +175,19 @@
               "src": "158:15:2"
             },
             "returnParameters": {
-              "id": 1645,
+              "id": 1651,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "182:0:2"
             },
-            "scope": 1647,
+            "scope": 1653,
             "src": "140:43:2",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1648,
+        "scope": 1654,
         "src": "59:127:2",
         "usedErrors": []
       }
@@ -198,15 +198,15 @@
     "absolutePath": "project:/contracts/IJudgeManager.sol",
     "exportedSymbols": {
       "IJudgeManager": [
-        1647
+        1653
       ]
     },
-    "id": 1648,
+    "id": 1654,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1636,
+        "id": 1642,
         "literals": [
           "solidity",
           "0.8",
@@ -222,9 +222,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 1647,
+        "id": 1653,
         "linearizedBaseContracts": [
-          1647
+          1653
         ],
         "name": "IJudgeManager",
         "nameLocation": "69:13:2",
@@ -232,7 +232,7 @@
         "nodes": [
           {
             "functionSelector": "8d5cf4d8",
-            "id": 1641,
+            "id": 1647,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -240,17 +240,17 @@
             "nameLocation": "99:10:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1639,
+              "id": 1645,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1638,
+                  "id": 1644,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "118:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1641,
+                  "scope": 1647,
                   "src": "110:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -259,7 +259,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1637,
+                    "id": 1643,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "110:7:2",
@@ -275,12 +275,12 @@
               "src": "109:15:2"
             },
             "returnParameters": {
-              "id": 1640,
+              "id": 1646,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "133:0:2"
             },
-            "scope": 1647,
+            "scope": 1653,
             "src": "90:44:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -288,7 +288,7 @@
           },
           {
             "functionSelector": "f3181bff",
-            "id": 1646,
+            "id": 1652,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -296,17 +296,17 @@
             "nameLocation": "149:9:2",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1644,
+              "id": 1650,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1643,
+                  "id": 1649,
                   "mutability": "mutable",
                   "name": "jugde",
                   "nameLocation": "167:5:2",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1646,
+                  "scope": 1652,
                   "src": "159:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -315,7 +315,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1642,
+                    "id": 1648,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "159:7:2",
@@ -331,19 +331,19 @@
               "src": "158:15:2"
             },
             "returnParameters": {
-              "id": 1645,
+              "id": 1651,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "182:0:2"
             },
-            "scope": 1647,
+            "scope": 1653,
             "src": "140:43:2",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 1648,
+        "scope": 1654,
         "src": "59:127:2",
         "usedErrors": []
       }
@@ -356,7 +356,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-10-23T14:34:42.577Z",
+  "updatedAt": "2021-10-24T00:05:14.329Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

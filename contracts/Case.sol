@@ -22,6 +22,7 @@ enum CaseStates {
 }
 
 struct CaseData {
+	uint caseId;
 	CaseParticipant requester;	
 	CaseParticipant opponent;
 	address[] judges;
@@ -36,7 +37,7 @@ struct CaseData {
 }
 
 contract Case {
-	uint constant STEP_EXPIRATION_TIME = 30 seconds; //1 days;
+	uint constant STEP_EXPIRATION_TIME = 10 minutes; //1 days;
 	uint constant JUDGE_CUT_DENOMINATOR = 100000; // 100%
 	uint constant JUDGE_CUT = 1000; // 1%
 
@@ -52,11 +53,12 @@ contract Case {
 	event CaseAborted();
 	event CaseClosed();
 
-	constructor(IJudgeManager judgesContract, address requesterAddress, address opponentAddress, string memory description, bytes32 proofHash, uint collateral) payable {
+	constructor(IJudgeManager judgesContract, uint caseId, address requesterAddress, address opponentAddress, string memory description, bytes32 proofHash, uint collateral) payable {
 		require(msg.value == collateral, "Invalid collateral provided");
 
 		judges = judgesContract;
 		data = CaseData(
+			caseId,
 			CaseParticipant(requesterAddress, proofHash, "", collateral),
 			CaseParticipant(opponentAddress, "", "", 0),
 			new address[](0),
