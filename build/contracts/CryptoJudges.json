@@ -11,7 +11,8 @@
       "name": "registerJudge",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -66,7 +67,8 @@
         }
       ],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -186,7 +188,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -306,7 +309,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -325,7 +329,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -343,7 +348,8 @@
       "name": "acceptCase",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -392,7 +398,8 @@
       "name": "appeal",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -28746,12 +28753,13 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0xd3125F0c0CCf5d9B5384B752E86Aa27D15c789Db",
-      "transactionHash": "0x43df8e52018a76235972f6d262fdba14a9f726bf67bf9f896b9387687daef719"
+      "address": "0x4710736eB86F54898A3f49638Dbde077573b7395",
+      "transactionHash": "0xd606ee9f993f41bedce20f03a550e40068940e332ef214c424b28c1260b184e1"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-10-24T00:05:14.308Z",
+  "updatedAt": "2021-10-24T09:41:52.237Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

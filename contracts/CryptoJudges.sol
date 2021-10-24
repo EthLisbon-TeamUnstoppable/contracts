@@ -44,10 +44,12 @@ contract CryptoJudges is IJudgeManager {
 	}
 
 	function reportGood(address judge) public {
+		require (msg.sender == address(Cases[lastCases[judge])])
 		JudgesData[Judges[judge]].score += JUDGE_SCORE_INCREMENT;
 	}
 
 	function reportBad(address judge) public {
+		require (msg.sender == address(Cases[lastCases[judge])])
 		uint judgeId = Judges[judge];
 		if (JudgesData[judgeId].score < JUDGE_SCORE_DECREMENT) { // score is too low, kick the judge
 			JudgesData[judgeId].banned = true;
